@@ -51,9 +51,12 @@ export default {
           username: this.username,
           password: this.password
         })
-        
+
         console.log(response)
-        this.error = null;
+        this.$store.dispatch('setToken', response.data.token)
+        this.$store.dispatch('setUser', response.data.user)
+
+        this.error = null
       } catch (error) {
         this.error = error.response.data.error
       }
@@ -142,7 +145,6 @@ export default {
         color: red;
     }
 
-
     .form-container {
         display: flex;
         justify-content: space-between;
@@ -167,6 +169,5 @@ export default {
          margin-top: 0.4rem;
          margin-bottom: 0.4rem;
     }
-
 
 </style>

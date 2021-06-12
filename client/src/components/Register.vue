@@ -141,7 +141,7 @@ export default {
   methods: {
     async register () {
       try {
-        await AuthenticationService.register({
+        const response = await AuthenticationService.register({
           name: this.name,
           // firstName: this.firstName,
           // lastName: this.lastName,
@@ -156,6 +156,11 @@ export default {
           // birdthDate: this.birthDate,
           // emergencyNumber: this.emergencyNumber
         })
+
+        this.$store.dispatch('setToken', response.data.token)
+        this.$store.dispatch('setUser', response.data.user)
+
+        this.error = null
       } catch (error) {
         this.error = error.response.data.error
       }
