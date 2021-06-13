@@ -9,13 +9,32 @@
                 <li>Vaccination</li>
                 <li>Restriction</li>
                 <li
-                v-if="!$store.state.isUserLoggedIn"
                 class="dropdown">
                   <span>Account</span>
                   <div class="dropdown-content">
-                  <li><router-link to="/login">Login</router-link></li>
-                  <hr/>
-                  <li><router-link to="/register">Register</router-link></li>
+                  <li
+                  v-if="!$store.state.isUserLoggedIn"
+                  ><router-link to="/login">Login</router-link></li>
+                  <hr
+                  v-if="!$store.state.isUserLoggedIn"
+                  />
+                  <li
+                  v-if="!$store.state.isUserLoggedIn"
+                  ><router-link to="/register">Register</router-link></li>
+                  <li
+                  v-if="$store.state.isUserLoggedIn"
+                  >
+                      <router-link
+                       to="/profile">
+                        My Profile
+                      </router-link>
+                      <hr/>
+                      <router-link
+                       @click.native="logout"
+                       to="/">
+                        Logout
+                      </router-link>
+                  </li>
                   </div>
                 </li>
 
@@ -27,7 +46,13 @@
 
 <script>
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  methods: {
+    logout () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setUser', null)
+    }
+  }
 }
 </script>
 
