@@ -53,6 +53,7 @@
 
 <script>
 import axios from 'axios'
+import HotspotsService from '../services/HotspotService'
 import TotalCasesBox from './home/TotalCasesBox'
 import LocalCasesBox from './home/LocalCasesBox'
 
@@ -86,7 +87,9 @@ export default {
     return {
     }
   },
-  mounted () {
+  async mounted () {
+    // const hotspots = await HotspotsService.index()
+
     let geojson = {
       'type': 'FeatureCollection',
       'properties': {
