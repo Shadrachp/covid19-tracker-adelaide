@@ -5,9 +5,12 @@ module.exports = (router) => {
     require('./hospital')(router)
     require('./address')(router)
     require('./checkInHistory')(router)
-    // require('./hotspot')(router)
+    require('./hotspot')(router)
+    require('./venue')(router)
     require('./patients')(router)
     require('./vaccine')(router)
+    require('./profile')(router)
+
 
     router.post('/register',
         AuthenticationControllerPolicy.register,
