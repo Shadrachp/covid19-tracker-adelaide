@@ -88,27 +88,21 @@ export default {
 
   name: 'Profile',
    data () {
-    let user = this.$store.state.user
+    let user = this.$store.state.profile !== undefined && this.$store.state.profile !== null
+        ? this.$store.state.profile
+        : this.$store.state.user
 
     return {
       name: user.name,
       email: user.email,
       username: user.username,
-      phone: user.phoneNumber ? user.phoneNumber : '',
+      phone: user.phoneNumber,
       emergencyNumber: user.emergencyNumber ? user.emergencyNumber : '',
       emergencyContactName: user.emergencyContactName ? user.emergencyContactName : '',
-      address: user.location ? user.location : '',
+      address: user.Address ? user.Address.location : '',
       error: null
     }
-  },
-  async mounted () {
-      let user = this.$store.state.user
-      const response = await ProfileService.profile({
-          username: user.username
-      })
-      console.log(response)
-
-  },
+},
   methods: {
     async save () {
       try {
@@ -116,17 +110,21 @@ export default {
           name: this.name,
           email: this.email,
           username: this.username,
-          phone: this.phone,
+          phoneNumber: this.phone,
           emergencyNumber: this.emergencyNumber,
           emergencyContactName: this.emergencyContactName,
           location: this.address
         })
+        let user = this.$store.state.user
+        const response2 = await ProfileService.profile({
+            username: this.username
+        })
 
-        console.log(response)
+        this.$store.dispatch('setProfile', response2.data[0])
       } catch (error) {
-        this.error = error.response.data.error
+        this.error = error.response2.data.error
       }
-    }
+  },
   }
 }
 </script>

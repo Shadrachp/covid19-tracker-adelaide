@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     token: null,
     user: null,
+    profile: null,
     isUserLoggedIn: false
   },
   mutations: {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     setUser (state, user) {
       state.user = user
+    },
+    setProfile (state, profile) {
+        state.profile = profile
     }
   },
   actions: {
@@ -29,6 +33,9 @@ export default new Vuex.Store({
     },
     setUser ({commit}, user) {
       commit('setUser', user)
-    }
+    },
+      setProfile({commit}, profile) {
+          commit('setProfile', profile)
+      }
   }
 })
