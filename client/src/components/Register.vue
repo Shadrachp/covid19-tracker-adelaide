@@ -145,7 +145,6 @@ export default {
           name: this.name,
           // firstName: this.firstName,
           // lastName: this.lastName,
-          addressId: 1,
           email: this.email,
           username: this.username,
           password: this.password,
@@ -161,6 +160,10 @@ export default {
         this.$store.dispatch('setUser', response.data.user)
 
         this.error = null
+
+        this.$router.push({
+          name: 'root'
+        })
       } catch (error) {
         this.error = error.response.data.error
       }
