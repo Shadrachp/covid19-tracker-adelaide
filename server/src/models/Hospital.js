@@ -1,5 +1,5 @@
-module.exports = (sequelize, DataTypes) =>
- sequelize.define('Hospital', {
+module.exports = (sequelize, DataTypes) => {
+ const Hospital = sequelize.define('Hospital', {
      id: {
          type: DataTypes.INTEGER,
          autoIncrement: true,
@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) =>
          required: true,
          allowNull: false
      },
-     vaccineId: {
-         type: DataTypes.INTEGER,
-         required: true,
-         allowNull: false
-     },
+     // vaccineId: {
+     //     type: DataTypes.INTEGER,
+     //     required: true,
+     //     allowNull: false
+     // },
      newCase: {
          type: DataTypes.INTEGER,
          allowNull: false,
@@ -35,3 +35,14 @@ module.exports = (sequelize, DataTypes) =>
          allowNull: false,
      }
  })
+
+ Hospital.associate = (models) => {
+     Hospital.hasMany(models.User, {
+         allowNull: true,
+         foreignKey: 'HospitalId',
+         SourceKey: 'id'
+     })
+ }
+
+ return Hospital
+}

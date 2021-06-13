@@ -22,11 +22,6 @@ const User = sequelize.define('User', {
      name: DataTypes.STRING,
      // firstName: DataTypes.STRING,
      // lastName: DataTypes.STRING,
-     addressId: {
-         type: DataTypes.INTEGER,
-         required: true,
-         allowNull: false
-     },
      email: {
          type: DataTypes.STRING,
          unique: true,
@@ -38,6 +33,7 @@ const User = sequelize.define('User', {
          unique: true
      },
      phoneNumber: DataTypes.STRING,
+     emergencyContactName: DataTypes.STRING,
      emergencyNumber: DataTypes.STRING,
      password: {
          type: DataTypes.STRING,
@@ -52,6 +48,22 @@ const User = sequelize.define('User', {
 
  User.prototype.comparePassword = function (pw) {
      return bcrypt.compareAsync(pw, this.password)
+ }
+
+ User.associate = (models) => {
+     User.belongsTo(models.Hospital, {
+         foreignKey: {
+             allowNull: true
+         }
+     })
+
+     User.hasOne(models.Address, {
+         allowNull: true,
+         defaultValue: null,
+         onDelete: 'CASCADE',
+         foreignKey: 'UserId',
+         SourceKey: 'id'
+     })
  }
 
  return User

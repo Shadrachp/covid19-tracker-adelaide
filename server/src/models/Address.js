@@ -1,11 +1,38 @@
-module.exports = (sequelize, DataTypes) =>
- sequelize.define('Address', {
+module.exports = (sequelize, DataTypes) => {
+ const Address = sequelize.define('Address', {
      id: {
          type: DataTypes.INTEGER,
          autoIncrement: true,
          primaryKey: true
      },
-     streetName: DataTypes.STRING,
-     cityName: DataTypes.STRING,
-     postalCode: DataTypes.STRING
+     accountType: {
+         type: DataTypes.STRING,
+         required: true,
+         allowNull: false
+     },
+     location: {
+         type: DataTypes.STRING,
+         required: true
+     },
  })
+
+ Address.associate = (models) => {
+     Address.belongsTo(models.User, {
+         foreignKey: {
+             allowNull: true,
+         }
+         // sourceKey: 'checkInCode',
+         // targetKey: 'id'
+     })
+
+     Address.belongsTo(models.Venue, {
+         foreignKey: {
+             allowNull: true,
+         }
+         // sourceKey: 'checkInCode',
+         // targetKey: 'id'
+     })
+ }
+
+ return Address
+}
